@@ -1,93 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Site com APIs</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f4f4;
-            text-align: center;
-        }
-
-        section {
-            background: white;
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        img {
-            width: 150px;
-        }
-    </style>
+  <meta charset="UTF-8">
 </head>
 <body>
 
-    <h1>Consumindo APIs 🎯</h1>
+  <h2>Star Wars</h2>
+  <button onclick="buscarStarWars()">Buscar Personagem</button>
+  <div id="starwars"></div>
 
-    <!-- Seção 1 -->
-    <section>
-        <h2>Rick and Morty</h2>
-        <div id="rick"></div>
-    </section>
+  <h2>Rick and Morty</h2>
+  <button onclick="buscarRick()">Buscar Personagem</button>
+  <div id="rick"></div>
 
-    <!-- Seção 2 -->
-    <section>
-        <h2>Pokémon</h2>
-        <div id="pokemon"></div>
-    </section>
+  <h2>Harry Potter</h2>
+  <button onclick="buscarHP()">Buscar Personagem</button>
+  <div id="hp"></div>
 
-    <!-- Seção 3 -->
-    <section>
-        <h2>Harry Potter</h2>
-        <div id="hp"></div>
-    </section>
-
-    <script>
-        fetch("https://rickandmortyapi.com/api/character")
-        .then(function(resposta) {
-            return resposta.json();
-        })
-        .then(function(dados) {
-            let div = document.getElementById("rick");
-
-            dados.results.slice(0, 3).forEach(function(personagem) {
-                div.innerHTML += `
-                    <p>${personagem.name}</p>
-                    <img src="${personagem.image}">
-                `;
-            });
+  <script>
+    function buscarStarWars() {
+      fetch('https://swapi.dev/api/people/1/')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('starwars').innerHTML = `
+            <p><strong>Nome:</strong> ${data.name}</p>
+            <p><strong>Altura:</strong> ${data.height}</p>
+            <p><strong>Peso:</strong> ${data.mass}</p>
+            <p><strong>Gênero:</strong> ${data.gender}</p>
+          `;
         });
+    }
 
-        fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
-        .then(function(resposta) {
-            return resposta.json();
-        })
-        .then(function(dados) {
-            let div = document.getElementById("pokemon");
-
-            div.innerHTML = `
-                <p>${dados.name}</p>
-                <img src="${dados.sprites.front_default}">
-            `;
+    function buscarRick() {
+      fetch('https://rickandmortyapi.com/api/character/1')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('rick').innerHTML = `
+            <p><strong>Nome:</strong> ${data.name}</p>
+            <p><strong>Status:</strong> ${data.status}</p>
+            <p><strong>Espécie:</strong> ${data.species}</p>
+            <p><strong>Gênero:</strong> ${data.gender}</p>
+          `;
         });
+    }
 
-        fetch("https://hp-api.onrender.com/api/characters")
-        .then(function(resposta) {
-            return resposta.json();
-        })
-        .then(function(dados) {
-            let div = document.getElementById("hp");
-
-            dados.slice(0, 3).forEach(function(personagem) {
-                div.innerHTML += `
-                    <p>${personagem.name}</p>
-                    <img src="${personagem.image}">
-                `;
-            });
+    function buscarHP() {
+      fetch('https://hp-api.onrender.com/api/characters')
+        .then(res => res.json())
+        .then(data => {
+          let personagem = data[0];
+          document.getElementById('hp').innerHTML = `
+            <p><strong>Nome:</strong> ${personagem.name}</p>
+            <p><strong>Casa:</strong> ${personagem.house}</p>
+            <p><strong>Espécie:</strong> ${personagem.species}</p>
+            <p><strong>Ator:</strong> ${personagem.actor}</p>
+          `;
         });
-    </script>
+    }
+  </script>
 
 </body>
 </html>
