@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Site com APIs</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
+        }
+
+        section {
+            background: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        img {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Consumindo APIs 🎯</h1>
+
+    <!-- Seção 1 -->
+    <section>
+        <h2>Rick and Morty</h2>
+        <div id="rick"></div>
+    </section>
+
+    <!-- Seção 2 -->
+    <section>
+        <h2>Pokémon</h2>
+        <div id="pokemon"></div>
+    </section>
+
+    <!-- Seção 3 -->
+    <section>
+        <h2>Harry Potter</h2>
+        <div id="hp"></div>
+    </section>
+
+    <script>
+        fetch("https://rickandmortyapi.com/api/character")
+        .then(function(resposta) {
+            return resposta.json();
+        })
+        .then(function(dados) {
+            let div = document.getElementById("rick");
+
+            dados.results.slice(0, 3).forEach(function(personagem) {
+                div.innerHTML += `
+                    <p>${personagem.name}</p>
+                    <img src="${personagem.image}">
+                `;
+            });
+        });
+
+        fetch("https://pokeapi.co/api/v2/pokemon/pikachu")
+        .then(function(resposta) {
+            return resposta.json();
+        })
+        .then(function(dados) {
+            let div = document.getElementById("pokemon");
+
+            div.innerHTML = `
+                <p>${dados.name}</p>
+                <img src="${dados.sprites.front_default}">
+            `;
+        });
+
+        fetch("https://hp-api.onrender.com/api/characters")
+        .then(function(resposta) {
+            return resposta.json();
+        })
+        .then(function(dados) {
+            let div = document.getElementById("hp");
+
+            dados.slice(0, 3).forEach(function(personagem) {
+                div.innerHTML += `
+                    <p>${personagem.name}</p>
+                    <img src="${personagem.image}">
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>
